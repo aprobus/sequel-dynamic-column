@@ -50,5 +50,31 @@ RSpec.describe Sequel::Plugins::JsonWideRow do
       end
     end
   end
-end
 
+  describe '.basic_columns' do
+    it 'excludes json columns' do
+      result = SpiceData.basic_columns
+
+      expect(result.length).to eq(2)
+      expect(result).to include(:id, :name)
+    end
+  end
+
+  describe '.json_extended_columns' do
+    it 'only includes json column fields' do
+      result = SpiceData.json_extended_columns
+
+      expect(result.length).to eq(1)
+      expect(result).to include(:price)
+    end
+  end
+
+  describe '.full_columns' do
+    it 'includes basic and json extended columns' do
+      result = SpiceData.full_columns
+
+      expect(result.length).to eq(3)
+      expect(result).to include(:id, :name, :price)
+    end
+  end
+end
