@@ -4,10 +4,14 @@ require_relative 'class_methods'
 module Sequel
   module Plugins
     module JsonWideRow
-      def self.configure(model, opts)
+      def self.configure(model, opts = {})
         config = Config.new
-        config.json_column = opts.fetch(:json_column)
-        config.extra_fields = opts.fetch(:extra_fields)
+        if block_given?
+          yield config
+        else
+          config.json_column = opts.fetch(:json_column)
+          config.extra_fields = opts.fetch(:extra_fields)
+        end
 
         model.instance_eval do
           @json_wide_row_config = config

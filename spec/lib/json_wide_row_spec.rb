@@ -2,27 +2,57 @@ require 'spec_helper'
 
 RSpec.describe Sequel::Plugins::JsonWideRow do
   describe 'config' do
-    let(:fake_class) do
-      class FakeClass < Sequel::Model
-        plugin :json_wide_row, json_column: :my_json_column, extra_fields: [:a_field]
+    context 'hash' do
+      let(:fake_class) do
+        class FakeClass < Sequel::Model
+          plugin :json_wide_row, json_column: :my_json_column, extra_fields: [:a_field]
+        end
+        FakeClass
       end
-      FakeClass
+
+      it 'sets json column' do
+        expect(fake_class.json_wide_row_config.json_column).to eq(:my_json_column)
+      end
+
+      it 'sets json fields' do
+        expect(fake_class.json_wide_row_config.extra_fields).to include(:a_field)
+      end
+
+      it 'adds getter for extra fields' do
+        expect(fake_class.new).to respond_to (:a_field)
+      end
+
+      it 'adds setter for extra fields' do
+        expect(fake_class.new).to respond_to (:a_field=)
+      end
     end
 
-    it 'sets json column' do
-      expect(fake_class.json_wide_row_config.json_column).to eq(:my_json_column)
-    end
+    context 'block' do
+      let(:fake_class) do
+        class FakeClass2 < Sequel::Model
+          plugin :json_wide_row do |c|
+            c.json_column  = :my_json_column
+            c.extra_fields = :a_field, :b_field
+          end
+        end
+        FakeClass2
+      end
 
-    it 'sets json fields' do
-      expect(fake_class.json_wide_row_config.extra_fields).to include(:a_field)
-    end
+      it 'sets json column' do
+        expect(fake_class.json_wide_row_config.json_column).to eq(:my_json_column)
+      end
 
-    it 'adds getter for extra fields' do
-      expect(fake_class.new).to respond_to (:a_field)
-    end
+      it 'sets json fields' do
+        expect(fake_class.json_wide_row_config.extra_fields).to include(:a_field, :b_field)
+      end
 
-    it 'adds setter for extra fields' do
-      expect(fake_class.new).to respond_to (:a_field=)
+      it 'adds getter for extra fields' do
+        expect(fake_class.new).to respond_to (:a_field)
+      end
+
+      it 'adds setter for extra fields' do
+        expect(fake_class.new).to respond_to (:a_field=)
+      end
     end
   end
 
