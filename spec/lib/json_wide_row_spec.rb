@@ -107,4 +107,20 @@ RSpec.describe Sequel::Plugins::JsonWideRow do
       expect(result).to include(:id, :name, :price)
     end
   end
+
+  describe '#to_extended_hash' do
+    it 'includes basic and extended columns' do
+      result = SpiceData.new(name: 'curry', price: 5).to_extended_hash
+
+      expect(result).to eq({ id: nil, name: 'curry', price: 5 })
+    end
+  end
+
+  describe '#extended_values' do
+    it 'includes basic and extended columns' do
+      result = SpiceData.new(name: 'curry', price: 5).extended_values
+
+      expect(result).to eq({ id: nil, name: 'curry', price: 5 })
+    end
+  end
 end

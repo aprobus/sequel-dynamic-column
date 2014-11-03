@@ -1,5 +1,6 @@
 require_relative 'config'
 require_relative 'class_methods'
+require_relative 'instance_methods'
 
 module Sequel
   module Plugins
