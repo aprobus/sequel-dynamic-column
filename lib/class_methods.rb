@@ -1,17 +1,17 @@
 module Sequel
   module Plugins
-    module JsonWideRow
+    module SequelDynamicColumn
       module ClassMethods
         def full_columns
-          basic_columns + json_extended_columns
+          basic_columns + dynamic_columns
         end
 
-        def json_extended_columns
-          @json_wide_row_config.extra_fields
+        def dynamic_columns
+          @dynamic_column_config.dynamic_columns
         end
 
         def basic_columns
-          columns - [@json_wide_row_config.json_column]
+          columns - [@dynamic_column_config.storage_column]
         end
       end
     end

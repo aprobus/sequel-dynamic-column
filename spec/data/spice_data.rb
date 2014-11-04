@@ -1,4 +1,3 @@
 class SpiceData < Sequel::Model(:spices)
-  plugin :json_wide_row, json_column: :json_fields, extra_fields: [:price]
-
+  plugin :sequel_dynamic_column, storage_column: :json_fields, dynamic_columns: [:price]
 end

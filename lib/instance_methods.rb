@@ -1,6 +1,6 @@
 module Sequel
   module Plugins
-    module JsonWideRow
+    module SequelDynamicColumn
       module InstanceMethods
         def to_extended_hash
           column_names = self.class.full_columns

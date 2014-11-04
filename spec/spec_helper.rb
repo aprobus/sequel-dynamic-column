@@ -1,10 +1,10 @@
 require 'bundler/setup'
 Bundler.require :default, :test
 
-require_relative '../lib/json_wide_row'
+require_relative '../lib/sequel_dynamic_column'
 
 Sequel.extension :migration
-DB = Sequel.connect('postgres://localhost/json_wide_row_test', max_connections: 2)
+DB = Sequel.connect('postgres://localhost/sequel_dynamic_column_test', max_connections: 2)
 DB.extension(:pg_array, :pg_json)
 
 Sequel::Migrator.run(DB, "spec/migrations")
