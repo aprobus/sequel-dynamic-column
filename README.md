@@ -75,7 +75,10 @@ SpiceData[1].to_extended_hash # { id: 1, name: 'basil', price: 2 }
 
 ### Installation
 
-
+Add to your gem file:
+```ruby
+gem 'sequel-dynamic-column'
+```
 
 ### License
 
